@@ -734,8 +734,7 @@ void SpatialPooler::updateInhibitionRadius_()
 
 void SpatialPooler::updateMinDutyCycles_()
 {
-  if (globalInhibition_ || inhibitionRadius_ >
-    *max_element(columnDimensions_.begin(), columnDimensions_.end())) {
+  if (useGlobalInhibition()) {
     updateMinDutyCyclesGlobal_();
   } else {
     updateMinDutyCyclesLocal_();
@@ -1012,9 +1011,7 @@ void SpatialPooler::inhibitColumns_(vector<Real>& overlaps,
     overlapsWithNoise[i] = overlaps[i] + tieBreaker_[i];
   }
 
-  if (globalInhibition_ ||
-      inhibitionRadius_ > *max_element(columnDimensions_.begin(),
-                                       columnDimensions_.end())) {
+  if (useGlobalInhibition()) {
     inhibitColumnsGlobal_(overlapsWithNoise, density, activeColumns);
   } else {
     inhibitColumnsLocal_(overlapsWithNoise, density, activeColumns);
