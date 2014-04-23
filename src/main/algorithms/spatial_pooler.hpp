@@ -372,6 +372,8 @@ namespace nta {
 
           void getConnectedCounts(UInt connectedCounts[]);
 
+          bool useGlobalInhibition();
+
           /**
           Print the main SP creation parameters to stdout. 
            */

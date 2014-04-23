@@ -254,6 +254,7 @@ namespace nta {
     testUpdateMinDutyCyclesGlobal();
     testUpdateMinDutyCyclesLocal();
     testUpdateDutyCycles();
+    testUseGlobalInhibition();
     testAvgColumnsPerInput();
     testAvgConnectedSpanForColumn1D();
     testAvgConnectedSpanForColumn2D();
@@ -568,6 +569,37 @@ namespace nta {
     Real trueOverlapArr2[] = {1, 1, 1, 0.999, 0.999};
 
     NTA_CHECK(check_vector_eq(resultOverlapArr2, trueOverlapArr2, numColumns));
+  }
+
+  void SpatialPoolerTest::testUseGlobalInhibition()
+  {
+    vector<UInt> inputDim, columnDim;
+    inputDim.push_back(10);
+    inputDim.push_back(20);
+    columnDim.push_back(4);
+    columnDim.push_back(5);
+
+    SpatialPooler sp;
+    sp.initialize(inputDim, columnDim);
+
+    // Test with globalInhibition = True
+    sp.setGlobalInhibition(true);
+    NTA_CHECK(sp.useGlobalInhibition() == true);
+
+    // Test with small inhibitionRadius
+    sp.setGlobalInhibition(false);
+    sp.setInhibitionRadius(1);
+    NTA_CHECK(sp.useGlobalInhibition() == false);
+
+    // Test with inhibitionRadius > numColumns and < numInputs
+    sp.setGlobalInhibition(false);
+    sp.setInhibitionRadius(25);
+    NTA_CHECK(sp.useGlobalInhibition() == true);
+
+    // Test with minimum inhibitionRadius for global inhibition
+    sp.setGlobalInhibition(false);
+    sp.setInhibitionRadius(2);
+    NTA_CHECK(sp.useGlobalInhibition() == true);
   }
 
   void SpatialPoolerTest::testAvgColumnsPerInput()

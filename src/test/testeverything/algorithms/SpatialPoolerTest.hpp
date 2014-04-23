@@ -67,6 +67,7 @@ namespace nta {
     void testUpdateMinDutyCyclesGlobal();
     void testUpdateMinDutyCyclesLocal();
     void testUpdateDutyCycles();
+    void testUseGlobalInhibition();
     void testAvgColumnsPerInput();
     void testAvgConnectedSpanForColumn1D();
     void testAvgConnectedSpanForColumn2D();

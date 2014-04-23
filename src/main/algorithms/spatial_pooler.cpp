@@ -408,7 +408,13 @@ void SpatialPooler::getConnectedCounts(UInt connectedCounts[])
   copy(connectedCounts_.begin(), connectedCounts_.end(), connectedCounts);
 }
 
+bool SpatialPooler::useGlobalInhibition()
+{
+  UInt maxColumnDimension = *max_element(columnDimensions_.begin(), columnDimensions_.end());
 
+  return (globalInhibition_ ||
+          inhibitionRadius_ * 2 + 1 >= maxColumnDimension);
+}
 
 void SpatialPooler::initialize(vector<UInt> inputDimensions,
   vector<UInt> columnDimensions,
